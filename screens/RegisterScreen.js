@@ -9,6 +9,7 @@ import {
 } from "react-native";
 import React, { useState } from "react";
 import { useNavigation } from "@react-navigation/native";
+import axios from "axios";
 
 const RegisterScreen = () => {
   const [email, setEmail] = useState("");
@@ -16,6 +17,38 @@ const RegisterScreen = () => {
   const [password, setPassword] = useState("");
   const [image, setImage] = useState("");
   const navigation = useNavigation();
+
+  const handleRegister = () => {
+    const user = {
+      name: name,
+      email: email,
+      password: password,
+      image: image,
+    };
+
+    // send a POST  request to the backend API to register the user
+    axios
+      .post("http://localhost:8000/register", user)
+      .then((response) => {
+        console.log(response);
+        Alert.alert(
+          "Registration successful",
+          "You have been registered Successfully"
+        );
+        setName("");
+        setEmail("");
+        setPassword("");
+        setImage("");
+      })
+      .catch((error) => {
+        Alert.alert(
+          "Registration Error",
+          "An error occurred while registering"
+        );
+        console.log("registration failed", error);
+      });
+  };
+
   return (
     <View
       style={{
@@ -125,6 +158,7 @@ const RegisterScreen = () => {
           </View>
 
           <Pressable
+            onPress={handleRegister}
             style={{
               width: 200,
               backgroundColor: "#4A55A2",
