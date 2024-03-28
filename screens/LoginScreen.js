@@ -1,10 +1,11 @@
 import {
   KeyboardAvoidingView,
-  StyleSheet,
+  Pressable,
+  View,
   Text,
   TextInput,
-  View,
-  Pressable,
+  TouchableOpacity,
+  StyleSheet,
   Alert,
 } from "react-native";
 import React, { useState, useEffect } from "react";
@@ -16,23 +17,24 @@ const LoginScreen = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const navigation = useNavigation();
-  useEffect(() => {
-    const checkLoginStatus = async () => {
-      try {
-        const token = await AsyncStorage.getItem("authToken");
+  // useEffect(() => {
+  //   const checkLoginStatus = async () => {
+  //     try {
+  //       const token = await AsyncStorage.getItem("authToken");
+  //       console.log("Login page token: " + token);
 
-        if (token) {
-          navigation.navigate("Home");
-        } else {
-          // token not found , show the login screen itself
-        }
-      } catch (error) {
-        console.log("error", error);
-      }
-    };
+  //       if (token) {
+  //         navigation.replace("Home");
+  //       } else {
+  //         // token not found , show the login screen itself
+  //       }
+  //     } catch (error) {
+  //       console.log("error", error);
+  //     }
+  //   };
 
-    checkLoginStatus();
-  }, []);
+  //   checkLoginStatus();
+  // }, []);
 
   const handleLogin = () => {
     const user = {
@@ -47,7 +49,7 @@ const LoginScreen = () => {
         const token = response.data.token;
         AsyncStorage.setItem("authToken", token);
 
-        navigation.navigate("Home");
+        navigation.replace("Home");
       })
       .catch((error) => {
         Alert.alert("Login Error", "Invalid email or password");
@@ -58,8 +60,9 @@ const LoginScreen = () => {
   return (
     <View
       style={{
-        marginTop: 100,
-        justifyContent: "center",
+        flex: 1,
+        backgroundColor: "white",
+        padding: 10,
         alignItems: "center",
       }}
     >
@@ -79,6 +82,7 @@ const LoginScreen = () => {
             Sign In to Your Account
           </Text>
         </View>
+
         <View style={{ marginTop: 50 }}>
           <View>
             <Text style={{ fontSize: 18, fontWeight: "600", color: "gray" }}>
@@ -96,7 +100,7 @@ const LoginScreen = () => {
                 width: 300,
               }}
               placeholderTextColor={"black"}
-              placeholder="Enter your email"
+              placeholder="enter Your Email"
             />
           </View>
 
@@ -161,4 +165,55 @@ const LoginScreen = () => {
 
 export default LoginScreen;
 
-const style = StyleSheet.create({});
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: "#000",
+    padding: 20,
+  },
+  logoContainer: {
+    alignItems: "center",
+    marginBottom: 30,
+  },
+  logoText: {
+    fontSize: 24,
+    fontWeight: "bold",
+    color: "#FFF",
+  },
+  sloganText: {
+    fontSize: 14,
+    color: "#FFF",
+  },
+  input: {
+    backgroundColor: "#FFF",
+    marginBottom: 10,
+    padding: 10,
+  },
+  roleContainer: {
+    marginBottom: 20,
+  },
+  roleTitle: {
+    fontSize: 16,
+    color: "#FFF",
+    marginBottom: 10,
+  },
+  roleButton: {
+    backgroundColor: "#FFF",
+    padding: 10,
+    marginBottom: 10,
+  },
+  roleText: {
+    fontSize: 14,
+    color: "#000",
+  },
+  loginButton: {
+    backgroundColor: "#8B0000",
+    padding: 10,
+    alignItems: "center",
+  },
+  loginText: {
+    fontSize: 16,
+    fontWeight: "bold",
+    color: "#FFF",
+  },
+});

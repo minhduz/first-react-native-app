@@ -108,6 +108,9 @@ app.get("/users/:userId", (req, res) => {
   User.find({ _id: { $ne: loggedInUserId } })
     .then((users) => {
       res.status(200).json(users);
+      console.log("====================================");
+      console.log("Success");
+      console.log("====================================");
     })
     .catch((err) => {
       console.log("Error retrieving users", err);
